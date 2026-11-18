@@ -1,7 +1,7 @@
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>ENTER YOUR NAME: Pavithra D</H3>
+<H3>ENTER YOUR REGISTER NO. 212223230146 </H3>
 <H3>EX. NO.1</H3>
-<H3>DATE</H3>
+<H3>DATE 18.11.2026 </H3>
 <H1 ALIGN =CENTER> Introduction to Kaggle and Data preprocessing</H1>
 
 ## AIM:
@@ -37,11 +37,108 @@ STEP 5:Normalizing the data<BR>
 STEP 6:Splitting the data into test and train<BR>
 
 ##  PROGRAM:
-TYPE YOUR CODE HERE
+```
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+
+# Load the dataset
+df = pd.read_csv("/content/drive/MyDrive/creditcard.csv")
+
+# Display the first five rows
+print("--- INITIAL DATAFRAME HEAD ---")
+print(df.head())
+
+# Check for missing values
+print("\n--- MISSING VALUES PER COLUMN ---")
+print(df.isnull().sum())
+
+# Check for duplicate rows
+print("\n--- TOTAL DUPLICATED ROWS ---")
+print(df.duplicated().sum())
 
 
+```
+
+```
+
+# Separate features and target variable
+X = df.drop(columns=["Class"])
+Y = df["Class"]
+
+# Scale the features
+scaler = MinMaxScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Create the scaled DataFrame
+df_scaled = pd.DataFrame(
+    X_scaled,
+    columns=X.columns,
+    index=df.index
+)
+
+df_scaled["Class"] = Y
+
+# Display the scaled data
+print("--- SCALED DATAFRAME HEAD ---")
+print(df_scaled.head())
+
+# Convert features and labels into arrays
+X = df_scaled.drop(columns=["Class"]).values
+Y = df_scaled["Class"].values
+
+# Display matrix dimensions
+print("\n--- SPLIT MATRICES OVERVIEW ---")
+print("Input Features (X):", X.shape)
+print("Output Labels (Y):", Y.shape)
+
+```
+
+```
+# Split the dataset into training and testing sets
+Xtrain, Xtest, Ytrain, Ytest = train_test_split(
+    X,
+    Y,
+    test_size=0.2,
+    random_state=42,
+    stratify=Y
+)
+
+# Display training and testing features
+print("--- TRAINING FEATURES (Xtrain) ---")
+print(Xtrain)
+
+print("\n--- TESTING FEATURES (Xtest) ---")
+print(Xtest)
+
+# Display target values
+print("\n--- TRAINING TARGET VALUES (Ytrain) ---")
+print(Ytrain)
+
+print("\n--- TESTING TARGET VALUES (Ytest) ---")
+print(Ytest)
+
+# Display dataset dimensions
+print("\n--- DATASET SPLIT SUMMARY ---")
+print("Training features:", Xtrain.shape)
+print("Testing features :", Xtest.shape)
+print("Training labels  :", Ytrain.shape)
+print("Testing labels   :", Ytest.shape)
+
+```
 ## OUTPUT:
-SHOW YOUR OUTPUT HERE
+<img width="1500" height="532" alt="Screenshot 2026-11-13 133639" src="https://github.com/user-attachments/assets/ad2fb38e-ab25-4a36-a3b8-121fbb8677d4" />
+<img width="782" height="730" alt="Screenshot 2026-11-13 133703" src="https://github.com/user-attachments/assets/7470cb5a-340b-44c0-9d85-b95c6080337b" />
+<img width="1046" height="590" alt="Screenshot 2026-11-13 133728" src="https://github.com/user-attachments/assets/8aa4bb4d-98ad-4a95-a124-bf0d1fa29261" />
+<img width="952" height="637" alt="Screenshot 2026-11-13 133746" src="https://github.com/user-attachments/assets/86080236-cb14-4856-9391-8cb37958506a" />
+<img width="690" height="247" alt="Screenshot 2026-11-13 133801" src="https://github.com/user-attachments/assets/e734f84c-0b5a-4156-b4e0-a14bacfe833e" />
+
+
+
 
 
 ## RESULT:
